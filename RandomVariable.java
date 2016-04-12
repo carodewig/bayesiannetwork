@@ -1,63 +1,81 @@
-import java.util.LinkedList;
+/*
+ * File: RandomVariable.java
+ * Creator: George Ferguson
+ * Created: Sun Mar 25 15:06:21 2012
+ * Time-stamp: <Mon Mar 26 10:41:40 EDT 2012 ferguson>
+ */
 
-public class RandomVariable {
-	
-	protected String name;
-	protected LinkedList<String> domain;
-	protected boolean observed;
-	protected String value;
-	
-	public RandomVariable(String name, LinkedList<String> domain, boolean observed, String value) {
-		this.name = name;
-		this.domain = domain;
-		this.observed = observed;
-		
-		if (observed)
-			this.value = value;
-		else
-			this.value = null;
-	}
-	
-	public RandomVariable(String name, LinkedList<String> domain) {
-		this.name = name;
-		this.domain = domain;
-	}
-	
-	public RandomVariable(String name) {
-		this.name = name;
-		domain = new LinkedList<String>();
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public LinkedList<String> getDomain() {
-		return domain;
-	}
-	
-	public boolean getObserved() {
-		return observed;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	public void setObserved(boolean obs) {
-		observed = obs;
-	}
-	
-	public void setValue(String val) {
-		value = val;
-	}
-	
-	public void addToDomain(String var) {
-		domain.add(var);
-	}
-	
-	public RandomVariable duplicate() {
-		return new RandomVariable(name, domain, observed, value);
-	}
-	
+import java.io.*;
+
+/**
+ * A RandomVariable in a BayesianNetwork has a name and a Domain of possible
+ * values.
+ */
+public class RandomVariable implements Printable {
+
+    public RandomVariable(String name, Domain domain) {
+	this.name = name;
+	this.domain = domain;
+    }
+
+    public RandomVariable(String name) {
+	this(name, new Domain());
+    }
+
+    protected String name;
+
+    public String getName() {
+	return name;
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    protected Domain domain;
+
+    public Domain getDomain() {
+	return domain;
+    }
+
+    public void setDomain(Domain domain) {
+	this.domain = domain;
+    }
+
+    // Printable
+
+    /**
+     * Print this RandomVariable to the given PrintWriter.
+     */
+    public void print(PrintWriter out) {
+	out.print(name);
+    }
+
+    /**
+     * Print this RandomVariable to the given PrintStream.
+     */
+    public void print(PrintStream out) {
+	PrintWriter writer = new PrintWriter(out, true);
+	print(writer);
+	writer.flush();
+    }
+
+    /**
+     * Print this RandomVariable to System.out.
+     */
+    public void print() {
+	print(System.out);
+    }
+
+    /**
+     * Return the string representation of this RandomVariable.
+     */
+    public String toString() {
+	StringWriter writer = new StringWriter();
+	PrintWriter out = new PrintWriter(writer);
+	print(out);
+	out.flush();
+	return writer.toString();
+    }
+
 }
