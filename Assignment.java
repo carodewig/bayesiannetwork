@@ -18,8 +18,14 @@ public class Assignment extends LinkedHashMap<RandomVariable,Object> {
     public static final long serialVersionUID = 1L;
 
     public Assignment() {
-	super();
+    	super();
     }
+
+    public Assignment(RandomVariable var, Object val) {
+        super();
+        set(var, val);
+    }
+
 
     /**
      * Set the value of the given RandomVariable stored in this Assignment.

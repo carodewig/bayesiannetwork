@@ -27,81 +27,85 @@ public class BayesianNetwork {
      * corresponds to a random variable, and has parent nodes, child
      * nodes, and a conditional probability table associated with it.
      */
-    protected class Node implements Printable {
+    public class Node implements Printable {
 
-	public RandomVariable variable;
-	public List<Node> parents;
-	public Set<Node> children = new ArraySet<Node>();
-	public CPT cpt;
+		public RandomVariable variable;
+		public List<Node> parents;
+		public Set<Node> children = new ArraySet<Node>();
+		public CPT cpt;
 
-	public Node(RandomVariable variable) {
-	    this.variable = variable;
-	}
-
-	// Printable
-
-	/**
-	 * Print this Node to the given PrintWriter.
-	 */
-	public void print(PrintWriter out) {
-	    print(out, 0);
-	}
-
-	/**
-	 * Print this Node to the given PrintWriter at the given
-	 * indent level.
-	 */
-	protected void print(PrintWriter out, int indent) {
-	    for (int i=0; i < indent; i++) {
-		out.print(" ");
-	    }
-	    out.print("[");
-	    out.print(variable.toString());
-	    if (children != null && !children.isEmpty()) {
-		out.println(":");
-		for (Node child : children) {
-		    child.print(out, indent+2);
-		    out.println();
+		public Node(RandomVariable variable) {
+		    this.variable = variable;
 		}
+
+		public CPT getCPT() {
+			return cpt;
+		}
+
+		// Printable
+
+		/**
+		 * Print this Node to the given PrintWriter.
+		 */
+		public void print(PrintWriter out) {
+		    print(out, 0);
+		}
+
+		/**
+		 * Print this Node to the given PrintWriter at the given
+		 * indent level.
+		 */
+		protected void print(PrintWriter out, int indent) {
+		    for (int i=0; i < indent; i++) {
+			out.print(" ");
+		    }
+		    out.print("[");
+		    out.print(variable.toString());
+		    if (children != null && !children.isEmpty()) {
+			out.println(":");
+			for (Node child : children) {
+			    child.print(out, indent+2);
+			    out.println();
+			}
+		    }
+		    for (int i=0; i < indent; i++) {
+			out.print(" ");
+		    }
+		    out.print("]");
+		}
+
+		/**
+		 * Print this Node to the given PrintStream.
+		 */
+		public void print(PrintStream out) {
+		    PrintWriter writer = new PrintWriter(out, true);
+		    print(writer);
+		    writer.flush();
+		}
+
+		/**
+		 * Print this Node to System.out.
+		 */
+		public void print() {
+		    print(System.out);
+		}
+
+		/**
+		 * Return the string representation of this Node.
+		 */
+		public String toString() {
+		    StringWriter writer = new StringWriter();
+		    PrintWriter out = new PrintWriter(writer);
+		    print(out);
+		    out.flush();
+		    return writer.toString();
+		}
+
 	    }
-	    for (int i=0; i < indent; i++) {
-		out.print(" ");
-	    }
-	    out.print("]");
-	}
 
-	/**
-	 * Print this Node to the given PrintStream.
-	 */
-	public void print(PrintStream out) {
-	    PrintWriter writer = new PrintWriter(out, true);
-	    print(writer);
-	    writer.flush();
-	}
-
-	/**
-	 * Print this Node to System.out.
-	 */
-	public void print() {
-	    print(System.out);
-	}
-
-	/**
-	 * Return the string representation of this Node.
-	 */
-	public String toString() {
-	    StringWriter writer = new StringWriter();
-	    PrintWriter out = new PrintWriter(writer);
-	    print(out);
-	    out.flush();
-	    return writer.toString();
-	}
-
-    }
-
-    /**
-     * Construct and return a new (empty) BayesianNetwork.
-     */
+	    /**
+	     * Construct and return a new (empty) BayesianNetwork.
+	     */
     public BayesianNetwork() {
     }
 
@@ -302,27 +306,27 @@ public class BayesianNetwork {
      * Print this BayesianNetwork to the given PrintStream.
      */
     public void print(PrintStream out) {
-	PrintWriter writer = new PrintWriter(out, true);
-	print(writer);
-	writer.flush();
+		PrintWriter writer = new PrintWriter(out, true);
+		print(writer);
+		writer.flush();
     }
 
     /**
      * Print this BayesianNetwork to System.out.
      */
     public void print() {
-	print(System.out);
+		print(System.out);
     }
 
     /**
      * Return the string representation of this BayesianNetwork.
      */
     public String toString() {
-	StringWriter writer = new StringWriter();
-	PrintWriter out = new PrintWriter(writer);
-	print(out);
-	out.flush();
-	return writer.toString();
+		StringWriter writer = new StringWriter();
+		PrintWriter out = new PrintWriter(writer);
+		print(out);
+		out.flush();
+		return writer.toString();
     }
 
     // Testing
@@ -335,21 +339,21 @@ public class BayesianNetwork {
      * Test driver for BayesianNetwork.
      */
     public static void main(String[] argv) {
-	RandomVariable A = new RandomVariable("A");
-	A.setDomain(new Domain("a1", "a2", "a3"));
-	RandomVariable B = new RandomVariable("B");
-	B.setDomain(new Domain("b1", "b2"));
-	RandomVariable C = new RandomVariable("C");
-	C.setDomain(new Domain("c1", "c2", "c3", "c4"));
-	List<RandomVariable> givens = new ArrayList<RandomVariable>(2);
-	givens.add(B);
-	givens.add(C);
-	CPT cpt = new CPT(A, givens);
-	BayesianNetwork network = new BayesianNetwork();
-	network.add(A);
-	network.add(B);
-	network.add(C);
-	network.connect(A, givens, cpt);
-	network.print(System.out);
+		RandomVariable A = new RandomVariable("A");
+		A.setDomain(new Domain("a1", "a2", "a3"));
+		RandomVariable B = new RandomVariable("B");
+		B.setDomain(new Domain("b1", "b2"));
+		RandomVariable C = new RandomVariable("C");
+		C.setDomain(new Domain("c1", "c2", "c3", "c4"));
+		List<RandomVariable> givens = new ArrayList<RandomVariable>(2);
+		givens.add(B);
+		givens.add(C);
+		CPT cpt = new CPT(A, givens);
+		BayesianNetwork network = new BayesianNetwork();
+		network.add(A);
+		network.add(B);
+		network.add(C);
+		network.connect(A, givens, cpt);
+		network.print(System.out);
     }
 }
