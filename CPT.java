@@ -177,6 +177,8 @@ public class CPT {
      * @throws NoSuchElementException if the values don't represent a path to a ProbabilityValue.
      */
     public double get(Assignment e) throws NoSuchElementException {
+		if (root == null)
+			System.out.println("null");
 	ProbabilityValue pv = find(root, e);
 	if (pv != null) {
 	    return pv.value;

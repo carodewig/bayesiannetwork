@@ -1,8 +1,10 @@
+import java.util.*;
 
-public class Inferenceer implements Inferencer {
+public class Inferenceer {
 	public Inferenceer() {
 
 	}
+	
 	public static Distribution enumerationAsk(RandomVariable X, Assignment e, BayesianNetwork bn) {
 		Distribution Q = new Distribution(X);
 		for (Object elem : X.getDomain()) {
@@ -14,13 +16,18 @@ public class Inferenceer implements Inferencer {
 		Q.normalize();
 		return Q;
 	}
+	
 	public static double enumerateAll(BayesianNetwork bn, List<RandomVariable> vars, Assignment e) {
 		if (vars.isEmpty()) {
 			return 1.0;
 		}
 		RandomVariable Y = vars.remove(0);
-		if (containsRandomVar(e, Y)) {
-			return bn.getNodeForVariable(Y).getCPT().get(e) * enumerateAll(bn, vars, e);
+		if (e.variableSet().contains(Y)) {
+			Node n = bn.getNodeForVariable(Y);
+			CPT cpt = n.getCPT();
+			double x = cpt.get(e);
+			double y = enumerateAll(bn, vars, e);
+			return x*y;
 		} else {
 			double sum = 0;
 			for (Object elem : Y.getDomain()) {
@@ -33,7 +40,8 @@ public class Inferenceer implements Inferencer {
 		}
 
 	}
-	private static boolean containsRandomVar(List<Assignment> e, RandomVariable Y) {
+	/*
+	private static boolean containsRandomVar(A e, RandomVariable Y) {
 		for (Assignment ass : e) {
 			if (ass.variableSet().contains(Y)) {
 				return true;
@@ -41,5 +49,5 @@ public class Inferenceer implements Inferencer {
 		}
 		return false;
 	}
-
+*/
 }

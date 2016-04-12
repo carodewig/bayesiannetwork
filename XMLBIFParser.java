@@ -188,6 +188,7 @@ public class XMLBIFParser {
 	XMLBIFParser parser = new XMLBIFParser();
 	BayesianNetwork network = parser.readNetworkFromFile(argv[0]);
 	network.print(System.out);
+	
     }
 
 }
