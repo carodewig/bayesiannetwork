@@ -196,11 +196,20 @@ public class XMLBIFParser {
 		for (int i = 2; i < argv.length; i+=2) {
 			ass.set(network.getVariableByName(argv[i]), argv[i+1]);
 		}
-		Inferenceer inf = new Inferenceer();
+	/*	Inferenceer inf = new Inferenceer();
 		
 		//ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
 		//ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
 		Distribution dist = inf.enumerationAsk(testing, ass, network);
+		for (Object obj : dist.keySet()) {
+	  		System.out.println(obj + ": " + dist.get(obj));
+		}
+	*/	
+		Inferencer inf = new Inferencer();
+		
+		//ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
+		//ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
+		Distribution dist = inf.rejectionSampling(testing, ass, network, 1000);
 		for (Object obj : dist.keySet()) {
 	  		System.out.println(obj + ": " + dist.get(obj));
 		}

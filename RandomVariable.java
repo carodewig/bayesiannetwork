@@ -6,13 +6,14 @@
  */
 
 import java.io.*;
+import java.util.HashMap;
 
 /**
  * A RandomVariable in a BayesianNetwork has a name and a Domain of possible
  * values.
  */
 public class RandomVariable implements Printable {
-
+	
     public RandomVariable(String name, Domain domain) {
 	this.name = name;
 	this.domain = domain;
@@ -42,7 +43,23 @@ public class RandomVariable implements Printable {
 	this.domain = domain;
     }
 
-    // Printable
+    HashMap<Object, Integer> counts = new HashMap<Object, Integer>();
+	
+	public void increment(Object element) {
+		if (counts.containsKey(element)) {
+			int currentValue = counts.get(element);
+			counts.put(element, currentValue+1);
+		} else {
+			counts.put(element, 1);
+		}
+	}
+	
+	public HashMap<Object, Integer> getCounts() {
+		return counts;
+	}
+	
+	
+	// Printable
 
     /**
      * Print this RandomVariable to the given PrintWriter.
