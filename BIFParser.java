@@ -1326,15 +1326,30 @@ public class BIFParser
      * resulting BN to stdout.
      */
     public static void main(String argv[]) throws IOException {
-	BIFParser parser;
-	if (argv.length == 0) {
-	    parser = new BIFParser(System.in);
-	} else {
-	    parser = new BIFParser(new FileInputStream(argv[0]));
-	}
-	//System.out.println(parser.parse());
-	BayesianNetwork bn = parser.parseNetwork();
-	bn.print(System.out);
+    	BIFParser parser;
+    	if (argv.length == 0) {
+    	    parser = new BIFParser(System.in);
+    	} else {
+    	    parser = new BIFParser(new FileInputStream(argv[0]));
+    	}
+    	//System.out.println(parser.parse());
+    	BayesianNetwork network = parser.parseNetwork();
+    	network.print(System.out);
+      List<RandomVariable> randVars = network.getVariableListTopologicallySorted();
+      Assignment ass = new Assignment();
+
+      RandomVariable testing = network.getVariableByName(argv[1]);
+      for (int i = 2; i < argv.length; i+=2) {
+        ass.set(network.getVariableByName(argv[i]), argv[i+1]);
+      }
+      Inferenceer inf = new Inferenceer();
+      
+      //ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
+      //ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
+      Distribution dist = inf.enumerationAsk(testing, ass, network);
+      for (Object obj : dist.keySet()) {
+          System.out.println(obj + ": " + dist.get(obj));
+      }
     }
 
     // Classes used in semantic actions
