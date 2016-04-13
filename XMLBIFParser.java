@@ -184,39 +184,6 @@ public class XMLBIFParser {
 	System.err.println(msg);
     }
 
-    public static void main(String[] argv) throws IOException, ParserConfigurationException, SAXException {
-		XMLBIFParser parser = new XMLBIFParser();
-		BayesianNetwork network = parser.readNetworkFromFile(argv[0]);
-		network.print(System.out);
-
-		List<RandomVariable> randVars = network.getVariableListTopologicallySorted();
-		Assignment ass = new Assignment();
-
-		RandomVariable testing = network.getVariableByName(argv[1]);
-		for (int i = 2; i < argv.length; i+=2) {
-			ass.set(network.getVariableByName(argv[i]), argv[i+1]);
-		}
-	/*	Inferenceer inf = new Inferenceer();
-		
-		//ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
-		//ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
-		Distribution dist = inf.enumerationAsk(testing, ass, network);
-		for (Object obj : dist.keySet()) {
-	  		System.out.println(obj + ": " + dist.get(obj));
-		}
-	*/	
-		Inferencer inf = new Inferencer();
-		
-		//ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
-		//ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
-		Distribution dist = inf.rejectionSampling(testing, ass, network, 1000);
-		for (Object obj : dist.keySet()) {
-	  		System.out.println(obj + ": " + dist.get(obj));
-		}
-		
-	
-    }
-
 }
 
 interface ElementTaker {

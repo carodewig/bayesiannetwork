@@ -1,0 +1,43 @@
+\documentclass[10pt, letterpaper, oneside, headinclude, footinclude, tikz]{scrartcl}
+\input{structure.tex}
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+\setlength\parindent{24pt}
+\linespread{1.2}
+\usepackage[toc,page]{appendix}
+\usepackage{csvsimple}
+\usepackage{multicol}
+\usepackage{amsmath,pgfplots,float,booktabs,ragged2e,pgfplotstable}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+
+\pagestyle{empty}
+\renewcommand\labelitemii{{\boldmath$\cdot$}}
+
+
+\title{\normalfont\spacedallcaps{Uncertain Inference} \\ \normalfont\spacedallcaps{CSC 242 Project 3}}
+\author{\spacedlowsmallcaps{Caroline Rodewig}}
+\date{}
+
+\begin{document}
+\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{#1}}} 
+\lehead{\mbox{\llap{\small\thepage\kern1em\color{halfgray} \vline}\color{halfgray}\hspace{0.5em}\rightmark\hfil}} 
+\pagestyle{scrheadings}
+
+\maketitle
+\setcounter{tocdepth}{2}
+
+\tableofcontents
+
+\section{Introduction}
+
+\section{Basic Model Checking}
+
+\subsection{Class Hierarchy}
+
+\section{Problems}
+I solved the first five problems.
+
+\section{Conclusions}
+While the DPLL algorithm is not always faster than the truth-table enumeration method, it is a much more elegant way to solve problems and can be more easily modified to handle large problems; there are many tricks to speeding up the algorithm even more that I was unable to implement before the deadline. In the future, I'd also like to create a parser that would read sentences such as ``$P<=>Q$'' from a text file and enter them into a knowledge base as sentences (rather than having to enter the sentences directly in the main method). However, apart from those two things, I think I was able to fully implement both automated reasoning methods and use them to accurately solve problems.
+\end{document}
+
