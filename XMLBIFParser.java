@@ -190,13 +190,17 @@ public class XMLBIFParser {
 		network.print(System.out);
 
 		List<RandomVariable> randVars = network.getVariableListTopologicallySorted();
+		Assignment ass = new Assignment();
 
+		RandomVariable testing = network.getVariableByName(argv[1]);
+		for (int i = 2; i < argv.length; i+=2) {
+			ass.set(network.getVariableByName(argv[i]), argv[i+1]);
+		}
 		Inferenceer inf = new Inferenceer();
 		
-		Assignment ass = new Assignment();
-		ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
-		ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
-		Distribution dist = inf.enumerationAsk(randVars.get(0), ass, network);
+		//ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
+		//ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
+		Distribution dist = inf.enumerationAsk(testing, ass, network);
 		for (Object obj : dist.keySet()) {
 	  		System.out.println(obj + ": " + dist.get(obj));
 		}
