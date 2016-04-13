@@ -185,9 +185,22 @@ public class XMLBIFParser {
     }
 
     public static void main(String[] argv) throws IOException, ParserConfigurationException, SAXException {
-	XMLBIFParser parser = new XMLBIFParser();
-	BayesianNetwork network = parser.readNetworkFromFile(argv[0]);
-	network.print(System.out);
+		XMLBIFParser parser = new XMLBIFParser();
+		BayesianNetwork network = parser.readNetworkFromFile(argv[0]);
+		network.print(System.out);
+
+		List<RandomVariable> randVars = network.getVariableListTopologicallySorted();
+
+		Inferenceer inf = new Inferenceer();
+		
+		Assignment ass = new Assignment();
+		ass.set(randVars.get(3), randVars.get(3).getDomain().get(0));
+		ass.set(randVars.get(4), randVars.get(4).getDomain().get(0));
+		Distribution dist = inf.enumerationAsk(randVars.get(0), ass, network);
+		for (Object obj : dist.keySet()) {
+	  		System.out.println(obj + ": " + dist.get(obj));
+		}
+		
 	
     }
 
